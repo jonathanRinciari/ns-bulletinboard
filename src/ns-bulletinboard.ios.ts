@@ -1,31 +1,45 @@
 import { Common } from './ns-bulletinboard.common';
 import { ios as iosApp } from "tns-core-modules/application";
-import { View } from 'tns-core-modules/ui/content-view'
+import { Color } from 'tns-core-modules/color';
 
 export class NsBulletinboard extends Common {
-  constructor() {
+  page: BLTNPageItem;
+  manager: BLTNItemManager;
+
+  constructor(title: string) {
     super();
-    let d = new BLTNPageItem({title: 'Test'});
-    d.dismissalHandler = function(a) {
-      console.log('TEST');
+    this.page = new BLTNPageItem({ title });
+    this.manager = new BLTNItemManager({
+      rootItem: this.page
+    });
+  }
+
+  addActionButton(title: string, actionHandler: () => {}, options?: {borderColor?: string, borderWidth?: number, buttonColor?: string, borderRadius?: number, titleColor?: string}) {
+    if (options.borderColor) {
+      this.page.appearance.actionButtonBorderColor = new Color(options.borderColor).ios;
     }
 
-    d.actionHandler = (p1) => {
+    if (options.borderWidth) {
+      
+    }
 
-      console.log('MAYBE');
-    };
+    if (options.buttonColor) {
+      this.page.appearance.actionButtonColor = new Color(options.buttonColor).ios;
+    }
 
-    d.actionButtonTitle = "Subscribe";
+    if (options.borderRadius) {
+      this.page.appearance.actionButtonCornerRadius = options.borderRadius;
+    }
 
+    if (options.titleColor) {
+      this.page.appearance.actionButtonTitleColor = new Color(options.titleColor).ios;
+    }
+    this.page.appearance.actionButtonBorderWidth = options.borderWidth;
+    this.page.actionHandler = actionHandler;
+    this.page.actionButtonTitle = title;
+  }
 
-
-    let a = new BLTNItemManager({
-      rootItem: d
-    });
-    a.backgroundViewStyle = BLTNBackgroundViewStyle.blurredDark;
-    a.showBulletinAboveViewControllerAnimatedCompletion(iosApp.rootController, true, () => {})
-
-    
-    
+  show() {
+    this.manager.showBulletinAboveViewControllerAnimatedCompletion(iosApp.rootController, true, () => {});
   }
 }

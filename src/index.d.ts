@@ -1,6 +1,14 @@
 import { Common } from './ns-bulletinboard.common';
 export declare class NsBulletinboard extends Common {
-  // define your typings manually
-  // or..
-  // take the ios or android .d.ts files and copy/paste them here
+    page: BLTNPageItem;
+    manager: BLTNItemManager;
+    constructor(title: string);
+    addActionButton(title: string, actionHandler: () => {}, options?: {
+        borderColor?: string;
+        borderWidth?: number;
+        buttonColor?: string;
+        borderRadius?: number;
+        titleColor?: string;
+    }): void;
+    show(): void;
 }

@@ -8,7 +8,15 @@ export class HelloWorldModel extends Observable {
   constructor() {
     super();
 
-    this.nsBulletinboard = new NsBulletinboard();
+    this.nsBulletinboard = new NsBulletinboard('TEST');
+    this.nsBulletinboard.addActionButton('Submit', () => {
+      return {};
+    }, {
+      borderRadius: 10,
+      borderColor: '#FFFFFF',
+      titleColor: '#000000',
+      buttonColor: '#FFFFFF'});
+    this.nsBulletinboard.show();
     this.message = this.nsBulletinboard.message;
   }
 }
